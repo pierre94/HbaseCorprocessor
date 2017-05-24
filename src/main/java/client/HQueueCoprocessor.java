@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by zhuifeng on 2017/5/23.
  */
-public class HqueueCoprocessor extends BaseRegionObserver {
+public class HQueueCoprocessor extends BaseRegionObserver {
     @Override
     public void prePut(ObserverContext<RegionCoprocessorEnvironment> e, Put put, WALEdit edit, Durability durability) throws IOException {
     }
