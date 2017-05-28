@@ -31,8 +31,12 @@ case $COMMAND in
   #core commands
   *)
     CLASS="tools.HQueueTools"
-    CLASSPATH=".:$BASE_HOME/conf"
-    hqueue_jar=`ls $BASE_HOME/jar/HQueue*.jar`
+    CLASSPATH="."
+    for jar in $BASE_HOME/target/lib/*.jar
+    do
+        CLASSPATH="$CLASSPATH:$jar"
+    done
+    hqueue_jar=`ls $BASE_HOME/target/userCopro*.jar`
     if [ $? -ne 0 ]; then
         exit 1
     fi

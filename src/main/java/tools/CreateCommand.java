@@ -33,12 +33,19 @@ public class CreateCommand implements Command {
         }
 
         if (cl.hasOption("h")) {
+            System.out.println("you use help");
             formatter.printHelp(formatStr, option);
             return false;
         }
-        name = cl.getOptionValue("name");
-        short defaultPartitions = -1;
-        partitionCount = StringUtils.parseShort(cl.getOptionValue("p"), defaultPartitions);
+        if(cl.hasOption("name")){
+            name = cl.getOptionValue("name");
+            System.out.println("name is:"+name);
+        }
+        if(cl.hasOption("p")){
+            short defaultPartitions = -1;
+            partitionCount = StringUtils.parseShort(cl.getOptionValue("p"), defaultPartitions);
+            System.out.println("parttionCount is:"+partitionCount);
+        }
 
         if (!checkParams()) {
             formatter.printHelp(formatStr, option);
