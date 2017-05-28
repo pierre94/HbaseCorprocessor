@@ -25,9 +25,15 @@ public class HQueueCoprocessor extends BaseRegionObserver {
     private short sequenceId = 0;
 
     @Override
+    public void preOpen(ObserverContext<RegionCoprocessorEnvironment> e) throws IOException {
+        LOG.info("open test coprocessor");
+    }
+
+    @Override
     public void preBatchMutate(ObserverContext<RegionCoprocessorEnvironment> c, MiniBatchOperationInProgress<Mutation> miniBatchOp) throws IOException {
         //use preBatchMutate instead of prePut for this lock
         synchronized(this){
+            LOG.info("come into preBatchMutate");
             long currentTime = EnvironmentEdgeManager.currentTime();
             if(timestamp != currentTime){
                 timestamp = currentTime;
@@ -35,6 +41,7 @@ public class HQueueCoprocessor extends BaseRegionObserver {
             }
             for(int i = 0; i < miniBatchOp.size(); ++i){
                 if(miniBatchOp.getOperationStatus(i).getOperationStatusCode() != HConstants.OperationStatusCode.NOT_RUN){
+                    LOG.info("preBatchMutate is be continued");
                     continue;
                 }
                 Mutation mutation = miniBatchOp.getOperation(i);
