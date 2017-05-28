@@ -1,5 +1,7 @@
 package client;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.HConstants;
 import org.apache.hadoop.hbase.client.Mutation;
@@ -18,6 +20,7 @@ import java.util.List;
  * Created by zhuifeng on 2017/5/23.
  */
 public class HQueueCoprocessor extends BaseRegionObserver {
+    private static final Log LOG = LogFactory.getLog(HQueueCoprocessor.class);
     private long timestamp = 0;
     private short sequenceId = 0;
 
@@ -52,6 +55,8 @@ public class HQueueCoprocessor extends BaseRegionObserver {
     }
 
     private void tranformPutMessageId(Put put, long timestamp, short sequenceId){
+        LOG.info("timestamp is:"+timestamp);
+        LOG.info("sequenceId is:"+sequenceId);
         System.arraycopy(Bytes.toBytes(timestamp), 0, put.getRow(),
                 HQueueConstants.PARTITION_ID_LENGTH, HQueueConstants.TIMESTAMP_LENGTH);
         System.arraycopy(Bytes.toBytes(sequenceId), 0, put.getRow(),
@@ -60,9 +65,9 @@ public class HQueueCoprocessor extends BaseRegionObserver {
         for(List<Cell> cells : put.getFamilyCellMap().values()){
             for(Cell cell : cells){
                 System.arraycopy(Bytes.toBytes(timestamp), 0, cell.getRowArray(),
-                        HQueueConstants.PARTITION_ID_LENGTH, HQueueConstants.TIMESTAMP_LENGTH);
+                        cell.getRowOffset() + HQueueConstants.PARTITION_ID_LENGTH, HQueueConstants.TIMESTAMP_LENGTH);
                 System.arraycopy(Bytes.toBytes(sequenceId), 0, cell.getRowArray(),
-                        HQueueConstants.PARTITION_ID_LENGTH + HQueueConstants.TIMESTAMP_LENGTH,
+                        cell.getRowOffset() + HQueueConstants.PARTITION_ID_LENGTH + HQueueConstants.TIMESTAMP_LENGTH,
                         HQueueConstants.SEQUENCE_ID_LENGTH);
             }
         }
