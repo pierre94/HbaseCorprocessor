@@ -4,6 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.HConstants;
+import org.apache.hadoop.hbase.KeyValue;
+import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.Mutation;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.coprocessor.BaseRegionObserver;
@@ -31,6 +33,14 @@ public class HQueueCoprocessor extends BaseRegionObserver {
         LOG.info("open test coprocessor");
         log.info("open test coprocessor");
         System.out.println("open test coprocessor");
+    }
+
+    @Override
+    public void preGetOp(ObserverContext<RegionCoprocessorEnvironment> e, Get get, List<Cell> results) throws IOException {
+        KeyValue kv = new KeyValue(get.getRow(),Bytes.toBytes(HQueueConstants.COLUMN_FAMILY),
+                HQueueConstants.DEFAULT_TOPIC, Bytes.toBytes("abcdefg"));
+        results.add(kv);
+        e.bypass();
     }
 
     @Override
@@ -88,6 +98,8 @@ public class HQueueCoprocessor extends BaseRegionObserver {
                 System.arraycopy(Bytes.toBytes(sequenceId), 0, cell.getRowArray(),
                         cell.getRowOffset() + HQueueConstants.PARTITION_ID_LENGTH + HQueueConstants.TIMESTAMP_LENGTH,
                         HQueueConstants.SEQUENCE_ID_LENGTH);
+                System.arraycopy(Bytes.toBytes("11111"), 0, cell.getValueArray(), cell.getValueOffset(),
+                        Bytes.toBytes("11111").length);
             }
         }
     }

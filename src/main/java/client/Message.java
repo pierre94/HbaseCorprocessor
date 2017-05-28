@@ -15,6 +15,12 @@ public class Message {
         this(partitionId, new MessageId(), HQueueConstants.DEFAULT_TOPIC, value);
     }
 
+    public Message(short partitionId, MessageId messageId) {
+        this.partitionId = partitionId;
+        this.messageId = messageId;
+    }
+
+
     public Message(short partitionId, byte[] topic, byte[] value) {
         this(partitionId, new MessageId(), topic, value);
     }

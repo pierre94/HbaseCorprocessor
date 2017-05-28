@@ -1,6 +1,8 @@
 package client;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
@@ -77,6 +79,14 @@ public class HQueue implements Closeable {
             list.add(put);
         }
         table.put(list);
+    }
+
+    public void get(Message message) throws IOException {
+        Get get = new Get(MessageProxy.makeRowkey(message));
+        Result result = table.get(get);
+        Cell cell = result.listCells().get(0);
+        byte[] value = CellUtil.cloneValue(cell);
+        System.out.println("get value is:"+Bytes.toString(value));
     }
 
     @Override
