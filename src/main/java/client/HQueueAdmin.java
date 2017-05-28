@@ -21,7 +21,7 @@ import java.io.IOException;
  */
 public class HQueueAdmin implements Abortable, Closeable {
     private final static int TTL = 3600 * 24;// one day
-    private final static String COPROCESSOR_JAR_PATH = "HQueue.jar";
+    private final static String COPROCESSOR_JAR_PATH = "userCopro-1.0-SNAPSHOT.jar";
     private final static String COPROCESSOR_CLASSNAME = "client.HQueueCoprocessor";
     private Admin admin;
     public HQueueAdmin() throws IOException{
