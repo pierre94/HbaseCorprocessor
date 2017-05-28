@@ -29,7 +29,7 @@ public class CreateCommand implements Command {
             cl = parser.parse(option, args);
         } catch (ParseException e) {
             formatter.printHelp(formatStr, option);
-            throw new HQueueParserException("create command params error");
+            throw new HQueueParserException("create command params error:"+e.getMessage());
         }
 
         if (cl.hasOption("h")) {

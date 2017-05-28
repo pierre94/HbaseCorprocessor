@@ -7,6 +7,8 @@ import common.HQueueParserException;
 import org.apache.commons.cli.*;
 import utils.StringUtils;
 
+import java.util.Arrays;
+
 public class ScanCommand implements Command {
     private String name;
     private short partitionId;
@@ -19,6 +21,7 @@ public class ScanCommand implements Command {
 
     @Override
     public boolean parser(String[] args) throws HQueueParserException {
+        System.out.println(Arrays.toString(args));
         Options option = new Options();
         option.addOption("name", true, "HQueue name");
         option.addOption("p", true, "hqueue partition id");
@@ -32,7 +35,7 @@ public class ScanCommand implements Command {
             cl = parser.parse(option, args);
         } catch (ParseException e) {
             formatter.printHelp(formatStr, option);
-            throw new HQueueParserException("create command params error");
+            throw new HQueueParserException("create command params error:"+e.getMessage());
         }
 
         if (cl.hasOption("h")) {

@@ -11,7 +11,7 @@ public class CollectionUtils {
         }
         int len = objects.length;
         String[] ret = new String[len - 1];
-        System.arraycopy(objects, 0, ret, 0, len -1 );
+        System.arraycopy(objects, 1, ret, 0, len -1 );
 //        for (int i = 1; i < len; i++) {
 //            ret[i - 1] = objects[i];
 //        }
