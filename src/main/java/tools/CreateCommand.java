@@ -17,9 +17,9 @@ public class CreateCommand implements Command {
     @Override
     public boolean parser(String[] args) throws HQueueParserException {
         Options option = new Options();
-        option.addOption("-name", true, "HQueue name");
-        option.addOption("-p", true, "hqueue partition num");
-        option.addOption("-h", false, "print help for the command");
+        option.addOption("name", true, "HQueue name");
+        option.addOption("p", true, "hqueue partition num");
+        option.addOption("h", false, "print help for the command");
 
         String formatStr = "-create -name -p ";
         HelpFormatter formatter = new HelpFormatter();
@@ -32,16 +32,16 @@ public class CreateCommand implements Command {
             throw new HQueueParserException("create command params error");
         }
 
-        if (cl.hasOption("-h")) {
+        if (cl.hasOption("h")) {
             System.out.println("you use help");
             formatter.printHelp(formatStr, option);
             return false;
         }
-        if(cl.hasOption("-name")){
+        if(cl.hasOption("name")){
             name = cl.getOptionValue("name");
             System.out.println("name is:"+name);
         }
-        if(cl.hasOption("-p")){
+        if(cl.hasOption("p")){
             short defaultPartitions = -1;
             partitionCount = StringUtils.parseShort(cl.getOptionValue("p"), defaultPartitions);
             System.out.println("parttionCount is:"+partitionCount);

@@ -20,9 +20,9 @@ public class PutCommand implements Command {
     @Override
     public boolean parser(String[] args) throws HQueueParserException {
         Options option = new Options();
-        option.addOption("-name", true, "HQueue name");
-        option.addOption("-p", true, "hqueue partition id");
-        option.addOption("-v", false, "value to put to hqueue");
+        option.addOption("name", true, "HQueue name");
+        option.addOption("p", true, "hqueue partition id");
+        option.addOption("v", false, "value to put to hqueue");
 
         String formatStr = "-put -name -p -v ";
         HelpFormatter formatter = new HelpFormatter();
@@ -35,14 +35,14 @@ public class PutCommand implements Command {
             throw new HQueueParserException("create command params error");
         }
 
-        if (cl.hasOption("-h")) {
+        if (cl.hasOption("h")) {
             formatter.printHelp(formatStr, option);
             return false;
         }
-        name = cl.getOptionValue("-name");
+        name = cl.getOptionValue("name");
         short defaultPartitionId = -1;
-        partitionId = StringUtils.parseShort(cl.getOptionValue("-p"), defaultPartitionId);
-        value = cl.getOptionValue("-v");
+        partitionId = StringUtils.parseShort(cl.getOptionValue("p"), defaultPartitionId);
+        value = cl.getOptionValue("v");
 
         if (!checkParams()) {
             formatter.printHelp(formatStr, option);

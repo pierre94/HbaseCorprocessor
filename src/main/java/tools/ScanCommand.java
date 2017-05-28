@@ -20,9 +20,9 @@ public class ScanCommand implements Command {
     @Override
     public boolean parser(String[] args) throws HQueueParserException {
         Options option = new Options();
-        option.addOption("-name", true, "HQueue name");
-        option.addOption("-p", true, "hqueue partition id");
-        option.addOption("-t", true, "hqueue message timestamp");
+        option.addOption("name", true, "HQueue name");
+        option.addOption("p", true, "hqueue partition id");
+        option.addOption("t", true, "hqueue message timestamp");
 
         String formatStr = "-put -name -p -t";
         HelpFormatter formatter = new HelpFormatter();
@@ -35,14 +35,14 @@ public class ScanCommand implements Command {
             throw new HQueueParserException("create command params error");
         }
 
-        if (cl.hasOption("-h")) {
+        if (cl.hasOption("h")) {
             formatter.printHelp(formatStr, option);
             return false;
         }
-        name = cl.getOptionValue("-name");
+        name = cl.getOptionValue("name");
         short defaultPartitionId = -1;
-        partitionId = StringUtils.parseShort(cl.getOptionValue("-p"), defaultPartitionId);
-        timestamp = StringUtils.parseLong(cl.getOptionValue("-t"), 0L);
+        partitionId = StringUtils.parseShort(cl.getOptionValue("p"), defaultPartitionId);
+        timestamp = StringUtils.parseLong(cl.getOptionValue("t"), 0L);
 
         if (!checkParams()) {
             formatter.printHelp(formatStr, option);
