@@ -1,13 +1,11 @@
-package client;
+package coprclient;
 
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.util.Bytes;
 
-import java.util.NavigableMap;
-
-import static client.HQueueConstants.*;
+import static coprclient.HQueueConstants.*;
 
 /**
  * Created by zhuifeng on 2017/5/25.

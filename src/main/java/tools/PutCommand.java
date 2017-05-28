@@ -1,7 +1,7 @@
 package tools;
 
-import client.HQueue;
-import client.Message;
+import coprclient.HQueue;
+import coprclient.Message;
 import common.HQueueParserException;
 import org.apache.commons.cli.*;
 import org.apache.hadoop.hbase.util.Bytes;

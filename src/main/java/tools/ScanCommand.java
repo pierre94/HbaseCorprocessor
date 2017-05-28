@@ -1,8 +1,8 @@
 package tools;
 
-import client.HQueue;
-import client.Message;
-import client.PartitionScanner;
+import coprclient.HQueue;
+import coprclient.Message;
+import coprclient.PartitionScanner;
 import common.HQueueParserException;
 import org.apache.commons.cli.*;
 import utils.StringUtils;

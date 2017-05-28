@@ -1,4 +1,4 @@
-package client;
+package coprclient;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.Cell;

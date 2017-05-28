@@ -1,11 +1,10 @@
 package tools;
 
-import client.HQueue;
-import client.Message;
-import client.MessageId;
+import coprclient.HQueue;
+import coprclient.Message;
+import coprclient.MessageId;
 import common.HQueueParserException;
 import org.apache.commons.cli.*;
-import org.apache.hadoop.hbase.util.Bytes;
 import utils.StringUtils;
 
 public class GetCommand implements Command {

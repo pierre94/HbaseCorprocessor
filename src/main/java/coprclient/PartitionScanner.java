@@ -1,4 +1,4 @@
-package client;
+package coprclient;
 
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
