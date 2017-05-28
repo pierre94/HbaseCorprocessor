@@ -11,10 +11,8 @@ public class Message {
     private byte[] topic;
     private byte[] value;
 
-    private static byte[] DEFAULT_TOPIC = Bytes.toBytes("d");
-
     public Message(short partitionId, byte[] value) {
-        this(partitionId, new MessageId(), DEFAULT_TOPIC, value);
+        this(partitionId, new MessageId(), HQueueConstants.DEFAULT_TOPIC, value);
     }
 
     public Message(short partitionId, byte[] topic, byte[] value) {
@@ -26,5 +24,27 @@ public class Message {
         this.messageId = messageId;
         this.topic = topic;
         this.value = value;
+    }
+
+    public short getPartitionId() {
+        return partitionId;
+    }
+
+    public MessageId getMessageId() {
+        return messageId;
+    }
+
+    public byte[] getTopic() {
+        return topic;
+    }
+
+    public byte[] getValue() {
+        return value;
+    }
+
+    public String toString() {
+        return String.format(
+                "partitionID(%d), timestamp(%d) sequence(%d) topic(%s) value(%s)", partitionId,
+                messageId.getTimestamp(), messageId.getSequenceID(), Bytes.toString(topic), Bytes.toString(value));
     }
 }

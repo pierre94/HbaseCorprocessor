@@ -47,4 +47,9 @@ public class MessageId {
     public void setSequenceID(short sequenceID) {
         this.sequenceID = sequenceID;
     }
+
+    @Override
+    public String toString() {
+        return "{timestamp=" + timestamp + ", sequenceID=" + sequenceID + "}";
+    }
 }
