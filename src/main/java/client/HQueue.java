@@ -55,7 +55,7 @@ public class HQueue implements Closeable {
                 0, HQueueConstants.PARTITION_ID_LENGTH);
         System.arraycopy(Bytes.toBytes(Long.MAX_VALUE), 0 ,  stopRow,
                 HQueueConstants.PARTITION_ID_LENGTH, HQueueConstants.TIMESTAMP_LENGTH);
-        System.arraycopy(Bytes.toBytes(Short.MAX_VALUE), 0 ,  startRow,
+        System.arraycopy(Bytes.toBytes(Short.MAX_VALUE), 0 ,  stopRow,
                 HQueueConstants.PARTITION_ID_LENGTH + HQueueConstants.TIMESTAMP_LENGTH, HQueueConstants.SEQUENCE_ID_LENGTH);
 
         scan.setStartRow(startRow);

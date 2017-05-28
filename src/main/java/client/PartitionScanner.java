@@ -17,6 +17,8 @@ public class PartitionScanner implements Cloneable{
 
     public boolean hasNext() throws IOException {
         Result result = scanner.next();
+        if(null == result)
+            return false;
         next = MessageProxy.result2Message(result);
         return next != null;
     }
