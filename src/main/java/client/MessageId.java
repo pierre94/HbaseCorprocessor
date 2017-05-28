@@ -14,10 +14,11 @@ public class MessageId {
 
     public MessageId() {
         this.timestamp = EnvironmentEdgeManager.currentTime();
+        this.sequenceID = (short)RAND.nextInt(Short.MAX_VALUE);
         System.out.println("+++++++++++++++++++++++++++++++++++");
         System.out.println("timestamp is:"+timestamp);
+        System.out.println("sequenceID is:"+sequenceID);
         System.out.println("+++++++++++++++++++++++++++++++++++");
-        this.sequenceID = (short)RAND.nextInt(Short.MAX_VALUE);
     }
 
     public MessageId(long timestamp) {
