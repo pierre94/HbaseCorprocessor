@@ -26,7 +26,7 @@ public class MessageProxy {
         Cell cell = result.listCells().get(0);
         byte[] rowkey = cell.getRowArray();
         short partitionId = Bytes.toShort(rowkey, 0 , PARTITION_ID_LENGTH);
-        long timestamp = Bytes.toShort(rowkey, PARTITION_ID_LENGTH , TIMESTAMP_LENGTH);
+        long timestamp = Bytes.toLong(rowkey, PARTITION_ID_LENGTH , TIMESTAMP_LENGTH);
         short sequenceId = Bytes.toShort(rowkey, PARTITION_ID_LENGTH + TIMESTAMP_LENGTH , SEQUENCE_ID_LENGTH);
         MessageId messageId = new MessageId(timestamp, partitionId);
         byte[] topic = cell.getQualifierArray();
