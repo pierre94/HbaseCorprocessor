@@ -15,6 +15,7 @@ public class HQueueTools {
         {
             put(CommandConstants.COMMAND_CREATE, new CreateCommand());
             put(CommandConstants.COMMAND_PUT, new PutCommand());
+            put(CommandConstants.COMMAND_GET, new GetCommand());
             put(CommandConstants.COMMAND_SCAN, new ScanCommand());
         }
     };

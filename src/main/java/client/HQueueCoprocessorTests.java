@@ -22,9 +22,9 @@ import java.util.List;
 /**
  * Created by zhuifeng on 2017/5/23.
  */
-public class HQueueCoprocessor extends BaseRegionObserver {
-    private static final Log LOG = LogFactory.getLog(HQueueCoprocessor.class);
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(HQueueCoprocessor.class);
+public class HQueueCoprocessorTests extends BaseRegionObserver {
+    private static final Log LOG = LogFactory.getLog(HQueueCoprocessorTests.class);
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(HQueueCoprocessorTests.class);
     private long timestamp = 0;
     private short sequenceId = 0;
 
