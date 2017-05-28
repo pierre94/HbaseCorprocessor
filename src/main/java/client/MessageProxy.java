@@ -31,14 +31,9 @@ public class MessageProxy {
                 cell.getRowOffset() + PARTITION_ID_LENGTH , TIMESTAMP_LENGTH);
         short sequenceId = Bytes.toShort(cell.getRowArray(),
                 cell.getRowOffset() +  PARTITION_ID_LENGTH + TIMESTAMP_LENGTH , SEQUENCE_ID_LENGTH);
-        System.out.println("partition id is:"+partitionId);
-        System.out.println("timestamp is:"+timestamp);
-        System.out.println("sequence id is:"+sequenceId);
         MessageId messageId = new MessageId(timestamp, sequenceId);
         byte[] topic = CellUtil.cloneQualifier(cell);
         byte[] value = CellUtil.cloneValue(cell);
-        System.out.println("topic is:"+Bytes.toString(topic));
-        System.out.println("value is:"+Bytes.toString(value));
         return new Message(partitionId, messageId, topic, value);
     }
 }
