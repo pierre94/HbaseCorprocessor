@@ -22,7 +22,7 @@ public class PutCommand implements Command {
         Options option = new Options();
         option.addOption("name", true, "HQueue name");
         option.addOption("p", true, "hqueue partition id");
-        option.addOption("v", false, "value to put to hqueue");
+        option.addOption("v", true, "value to put to hqueue");
 
         String formatStr = "-put -name -p -v ";
         HelpFormatter formatter = new HelpFormatter();

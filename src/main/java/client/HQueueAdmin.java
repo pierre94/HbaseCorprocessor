@@ -48,7 +48,7 @@ public class HQueueAdmin implements Abortable, Closeable {
         hColumnDescriptor.setDataBlockEncoding(DataBlockEncoding.DIFF);
         hColumnDescriptor.setMaxVersions(1);
         hColumnDescriptor.setTimeToLive(ttl);
-        hColumnDescriptor.setValue(HStore.BLOCKING_STOREFILES_KEY, String.valueOf(Long.MAX_VALUE));
+        hColumnDescriptor.setValue(HStore.BLOCKING_STOREFILES_KEY, String.valueOf(Integer.MAX_VALUE));
 
         hTableDescriptor.addFamily(hColumnDescriptor);
 
