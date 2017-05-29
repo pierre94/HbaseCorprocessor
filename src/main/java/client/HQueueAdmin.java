@@ -1,6 +1,6 @@
 package client;
 
-import coprocessor.HbaseCoprocessor;
+import coprocessor.HputCoprocessorTest;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.*;
@@ -37,8 +37,8 @@ public class HQueueAdmin implements Abortable, Closeable {
         hTableDescriptor.setMemStoreFlushSize(256 * 1024 * 1024);
 
         Path path = new Path(COPROCESSOR_JAR_PATH);
-        hTableDescriptor.addCoprocessor(HbaseCoprocessor.class.getName(),path,
-                100, null);
+        hTableDescriptor.addCoprocessor(HputCoprocessorTest.class.getName(),path,
+                Coprocessor.PRIORITY_USER, null);
 
         HColumnDescriptor hColumnDescriptor = new HColumnDescriptor(HQueueConstants.COLUMN_FAMILY);
         hColumnDescriptor.setBlockCacheEnabled(false);

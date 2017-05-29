@@ -21,9 +21,9 @@ import java.util.List;
 /**
  * Created by zhuifeng on 2017/5/23.
  */
-public class HbaseCoprocessor extends BaseRegionObserver {
-    private static final Log LOG = LogFactory.getLog(HbaseCoprocessor.class);
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(HbaseCoprocessor.class);
+public class HputCoprocessorTest extends BaseRegionObserver {
+    private static final Log LOG = LogFactory.getLog(HputCoprocessorTest.class);
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(HputCoprocessorTest.class);
     private long timestamp = 0;
     private short sequenceId = 0;
 
