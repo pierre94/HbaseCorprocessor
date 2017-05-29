@@ -72,13 +72,15 @@ public class HQueue implements Closeable {
         table.put(put);
     }
     public void put(List<Message> messages) throws IOException {
-        List<Put> list = new ArrayList<>();
+        List<Put> puts = new ArrayList<>();
+        System.out.println("messages size is:"+messages.size());
         for(Message message : messages){
             Put put = new Put(MessageProxy.makeRowkey(message));
             put.addColumn(Bytes.toBytes(HQueueConstants.COLUMN_FAMILY), message.getTopic(), message.getValue());
-            list.add(put);
+            puts.add(put);
         }
-        table.put(list);
+        System.out.println("puts size is:"+puts.size());
+        table.put(puts);
     }
 
     public void get(Message message) throws IOException {

@@ -36,7 +36,7 @@ case $COMMAND in
     do
         CLASSPATH="$CLASSPATH:$jar"
     done
-    hqueue_jar=`ls $BASE_HOME/target/userCopro*.jar`
+    hqueue_jar=`ls $BASE_HOME/target/userdefinedCopro*.jar`
     if [ $? -ne 0 ]; then
         exit 1
     fi
