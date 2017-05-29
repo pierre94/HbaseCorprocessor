@@ -1,5 +1,6 @@
-package client;
+package coprocessor;
 
+import client.HQueueConstants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hbase.Cell;
@@ -20,9 +21,9 @@ import java.util.List;
 /**
  * Created by zhuifeng on 2017/5/23.
  */
-public class HQueueMutationCoprocessor extends BaseRegionObserver {
-    private static final Log LOG = LogFactory.getLog(HQueueMutationCoprocessor.class);
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(HQueueMutationCoprocessor.class);
+public class HbaseCoprocessor extends BaseRegionObserver {
+    private static final Log LOG = LogFactory.getLog(HbaseCoprocessor.class);
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(HbaseCoprocessor.class);
     private long timestamp = 0;
     private short sequenceId = 0;
 
