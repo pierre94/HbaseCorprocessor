@@ -61,11 +61,11 @@ public class PutCommand implements Command {
 
     @Override
     public void execute() throws Exception {
+        ExecutorService service = Executors.newFixedThreadPool(5);
         HQueue hQueue = null;
         try {
             hQueue = new HQueue(name);
             final HQueue hqueue = hQueue;
-            ExecutorService service = Executors.newFixedThreadPool(5);
             service.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -82,6 +82,7 @@ public class PutCommand implements Command {
             });
             System.out.println("put message to hqueue success");
         } finally {
+            service.shutdown();
             if(null != hQueue){
                 hQueue.close();
             }
