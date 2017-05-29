@@ -4,8 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.HConstants;
-import org.apache.hadoop.hbase.KeyValue;
-import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.Mutation;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.coprocessor.BaseRegionObserver;
@@ -22,9 +20,9 @@ import java.util.List;
 /**
  * Created by zhuifeng on 2017/5/23.
  */
-public class HbaseCoprocessor extends BaseRegionObserver {
-    private static final Log LOG = LogFactory.getLog(HbaseCoprocessor.class);
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(HbaseCoprocessor.class);
+public class HQueueMutationCoprocessor extends BaseRegionObserver {
+    private static final Log LOG = LogFactory.getLog(HQueueMutationCoprocessor.class);
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(HQueueMutationCoprocessor.class);
     private long timestamp = 0;
     private short sequenceId = 0;
 

@@ -36,7 +36,7 @@ public class HQueueAdmin implements Abortable, Closeable {
         hTableDescriptor.setMemStoreFlushSize(256 * 1024 * 1024);
 
         Path path = new Path(COPROCESSOR_JAR_PATH);
-        hTableDescriptor.addCoprocessor(HbaseCoprocessor.class.getName(),path,
+        hTableDescriptor.addCoprocessor(HQueueMutationCoprocessor.class.getName(),path,
                 100, null);
 
         HColumnDescriptor hColumnDescriptor = new HColumnDescriptor(HQueueConstants.COLUMN_FAMILY);
