@@ -10,10 +10,7 @@ import utils.StringUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.*;
 
 public class PutCommand implements Command {
     private String name;
@@ -61,28 +58,33 @@ public class PutCommand implements Command {
 
     @Override
     public void execute() throws Exception {
-        ExecutorService service = Executors.newFixedThreadPool(5);
+        final int threads = 5;
+        final CountDownLatch endGate = new CountDownLatch(threads);
         HQueue hQueue = null;
         try {
             hQueue = new HQueue(name);
             final HQueue hqueue = hQueue;
-            service.execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
+            for(int i = 0; i < threads; ++i){
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
                         List<Message> messages = new ArrayList<>();
                         for(int i = 0; i< 2; ++i){
                             messages.add(new Message(partitionId, Bytes.toBytes(value + i)));
                         }
-                        hqueue.put(messages);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        try {
+                            hqueue.put(messages);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } finally {
+                            endGate.countDown();
+                        }
                     }
-                }
-            });
+                });
+            }
             System.out.println("put message to hqueue success");
         } finally {
-            service.shutdown();
+            endGate.await();
             if(null != hQueue){
                 hQueue.close();
             }
