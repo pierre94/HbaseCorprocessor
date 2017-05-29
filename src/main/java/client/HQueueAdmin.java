@@ -1,6 +1,6 @@
 package client;
 
-import coprocessor.HputCoprocessorTest;
+import coprocessor.HbaseCoprocessor;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.*;
@@ -18,7 +18,7 @@ import java.io.IOException;
  */
 public class HQueueAdmin implements Abortable, Closeable {
     private final static int TTL = 3600 * 24;// one day
-    private final static String COPROCESSOR_JAR_PATH = "/userCopro-1.0-SNAPSHOT.jar";
+    private final static String COPROCESSOR_JAR_PATH = "/userdefinedCopro-1.0-SNAPSHOT.jar";
     private Admin admin;
     public HQueueAdmin() throws IOException{
         Configuration conf = new Configuration();
@@ -37,7 +37,7 @@ public class HQueueAdmin implements Abortable, Closeable {
         hTableDescriptor.setMemStoreFlushSize(256 * 1024 * 1024);
 
         Path path = new Path(COPROCESSOR_JAR_PATH);
-        hTableDescriptor.addCoprocessor(HputCoprocessorTest.class.getName(),path,
+        hTableDescriptor.addCoprocessor(HbaseCoprocessor.class.getName(),path,
                 Coprocessor.PRIORITY_USER, null);
 
         HColumnDescriptor hColumnDescriptor = new HColumnDescriptor(HQueueConstants.COLUMN_FAMILY);
