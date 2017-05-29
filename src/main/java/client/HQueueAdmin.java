@@ -26,19 +26,31 @@ public class HQueueAdmin implements Abortable, Closeable {
         this.admin = connection.getAdmin();
     }
 
+    public HQueueAdmin(Admin admin){
+        this.admin = admin;
+    }
+
     public void createHQueue(String name, int partitionCount) throws IOException {
         createHQueue(name, partitionCount, TTL);
     }
 
     public void createHQueue(String name, int partitionCount, int ttl) throws IOException {
+        createHQueue(name, partitionCount, ttl, false);
+    }
+
+    public void createHQueue(String name, int partitionCount, int ttl, boolean debug) throws IOException {
         HTableDescriptor hTableDescriptor = new HTableDescriptor(TableName.valueOf(name));
         hTableDescriptor.setDurability(Durability.ASYNC_WAL);
         hTableDescriptor.setMaxFileSize(Long.MAX_VALUE);
         hTableDescriptor.setMemStoreFlushSize(256 * 1024 * 1024);
 
-        Path path = new Path(COPROCESSOR_JAR_PATH);
-        hTableDescriptor.addCoprocessor(HbaseCoprocessor.class.getName(),path,
-                Coprocessor.PRIORITY_USER, null);
+        if(debug){
+            hTableDescriptor.addCoprocessor(HbaseCoprocessor.class.getName());
+        }else{
+            Path path = new Path(COPROCESSOR_JAR_PATH);
+            hTableDescriptor.addCoprocessor(HbaseCoprocessor.class.getName(),path,
+                    Coprocessor.PRIORITY_USER, null);
+        }
 
         HColumnDescriptor hColumnDescriptor = new HColumnDescriptor(HQueueConstants.COLUMN_FAMILY);
         hColumnDescriptor.setBlockCacheEnabled(false);
@@ -66,7 +78,10 @@ public class HQueueAdmin implements Abortable, Closeable {
 
     @Override
     public void close() throws IOException {
-
+        if(null != admin){
+            admin.close();
+            admin = null;
+        }
     }
 
     @Override

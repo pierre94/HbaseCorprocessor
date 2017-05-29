@@ -25,6 +25,11 @@ public class HQueue implements Closeable {
         table = connection.getTable(TableName.valueOf(name));
     }
 
+    public HQueue(String name, HBaseAdmin admin) throws IOException {
+        Connection connection = ConnectionFactory.createConnection(admin.getConfiguration());
+        table = connection.getTable(TableName.valueOf(name));
+    }
+
     public PartitionScanner getScanner(short partitionId)
             throws IOException {
         return getScanner(partitionId, 0L, HQueueConstants.DEFAULT_TOPIC);
