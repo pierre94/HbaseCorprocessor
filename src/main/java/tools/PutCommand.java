@@ -81,6 +81,7 @@ public class PutCommand implements Command {
                         }
                     }
                 });
+                thread.start();
             }
             System.out.println("put message to hqueue success");
         } finally {
