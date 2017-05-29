@@ -59,7 +59,7 @@ public class HQueueAdmin implements Abortable, Closeable {
     private byte[][] generateSplitKeys(int partitionCount){
         byte[][] keys = new byte[partitionCount - 1][];
         for(int i = 0; i < partitionCount - 1; ++i){
-            keys[i] = Bytes.toBytes(i + 1);
+            keys[i] = Bytes.toBytes((short)i + 1);
         }
         return keys;
     }
