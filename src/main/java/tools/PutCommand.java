@@ -37,7 +37,7 @@ public class PutCommand implements Command {
             cl = parser.parse(option, args);
         } catch (ParseException e) {
             formatter.printHelp(formatStr, option);
-            throw new HQueueParserException("create command params error:"+e.getMessage());
+            throw new HQueueParserException("create command params error:" + e.getMessage());
         }
 
         if (cl.hasOption("h")) {
@@ -60,36 +60,32 @@ public class PutCommand implements Command {
     public void execute() throws Exception {
         final int threads = 5;
         final CountDownLatch endGate = new CountDownLatch(threads);
-        HQueue hQueue = null;
-        try {
-            hQueue = new HQueue(name);
-            final HQueue hqueue = hQueue;
-            for(int i = 0; i < threads; ++i){
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
+        for (int i = 0; i < threads; ++i) {
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    HQueue hqueue = null;
+                    try {
+                        hqueue = new HQueue(name);
                         List<Message> messages = new ArrayList<>();
-                        for(int i = 0; i< 2; ++i){
+                        for (int i = 0; i < 2; ++i) {
                             messages.add(new Message(partitionId, Bytes.toBytes(value + i)));
                         }
+                        hqueue.put(messages);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
                         try {
-                            hqueue.put(messages);
+                            hqueue.close();
                         } catch (IOException e) {
                             e.printStackTrace();
-                        } finally {
-                            endGate.countDown();
                         }
                     }
-                });
-                thread.start();
-            }
-            System.out.println("put message to hqueue success");
-        } finally {
-            endGate.await();
-            if(null != hQueue){
-                hQueue.close();
-            }
+                }
+            });
+            thread.start();
         }
+        System.out.println("put message to hqueue success");
     }
 
     private boolean checkParams() {
