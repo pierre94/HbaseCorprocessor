@@ -8,7 +8,6 @@ import hbase.GlobalHBaseMinicluster;
 import org.apache.hadoop.hbase.HBaseTestingUtility;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.hadoop.hbase.util.EnvironmentEdgeManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,14 +20,14 @@ import static org.junit.Assert.assertEquals;
  * Created by zhuifeng on 2017/5/29.
  */
 public class HbaseCoprocessorTest {
-    public static HBaseTestingUtility miniCluster = GlobalHBaseMinicluster.getMiniCluster();
+    public static HBaseTestingUtility hbaseTestUtl = GlobalHBaseMinicluster.getHbaseTestUtl();
     public static HBaseAdmin hBaseAdmin = null;
     public final static String HQUEUE_NAME = "first_queue";
     public final static short PARTTION_COUNT = 5;
     public final static short PARTTION_Id = 2;
     @Before
     public void setUp() throws Exception {
-        hBaseAdmin = miniCluster.getHBaseAdmin();
+        hBaseAdmin = hbaseTestUtl.getHBaseAdmin();
     }
 
     @After
