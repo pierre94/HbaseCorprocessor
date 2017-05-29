@@ -1,13 +1,9 @@
-package coprclient;
+package client;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.*;
-import org.apache.hadoop.hbase.client.Admin;
-import org.apache.hadoop.hbase.client.Connection;
-import org.apache.hadoop.hbase.client.ConnectionFactory;
-import org.apache.hadoop.hbase.client.Durability;
+import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.io.compress.Compression;
 import org.apache.hadoop.hbase.io.encoding.DataBlockEncoding;
 import org.apache.hadoop.hbase.regionserver.HStore;
@@ -21,8 +17,7 @@ import java.io.IOException;
  */
 public class HQueueAdmin implements Abortable, Closeable {
     private final static int TTL = 3600 * 24;// one day
-    private final static String COPROCESSOR_JAR_PATH = "userCopro-1.0-SNAPSHOT.jar";
-    private final static String COPROCESSOR_CLASSNAME = "coprclient.PutCoprocessorTests";
+    private final static String COPROCESSOR_JAR_PATH = "/userCopro-1.0-SNAPSHOT.jar";
     private Admin admin;
     public HQueueAdmin() throws IOException{
         Configuration conf = new Configuration();
@@ -40,11 +35,8 @@ public class HQueueAdmin implements Abortable, Closeable {
         hTableDescriptor.setMaxFileSize(Long.MAX_VALUE);
         hTableDescriptor.setMemStoreFlushSize(256 * 1024 * 1024);
 
-        FileSystem fs = FileSystem.get(admin.getConfiguration());
-        Path path = new Path(fs.getUri() + Path.SEPARATOR + COPROCESSOR_JAR_PATH);
-//        hTableDescriptor.addCoprocessor(COPROCESSOR_CLASSNAME,path,
-//                Coprocessor.PRIORITY_USER, null);
-        hTableDescriptor.addCoprocessor(COPROCESSOR_CLASSNAME,path,
+        Path path = new Path(COPROCESSOR_JAR_PATH);
+        hTableDescriptor.addCoprocessor(HbaseCoprocessor.class.getName(),path,
                 100, null);
 
         HColumnDescriptor hColumnDescriptor = new HColumnDescriptor(HQueueConstants.COLUMN_FAMILY);

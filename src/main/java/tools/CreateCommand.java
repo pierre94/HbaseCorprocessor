@@ -1,6 +1,6 @@
 package tools;
 
-import coprclient.HQueueAdmin;
+import client.HQueueAdmin;
 import common.HQueueParserException;
 import org.apache.commons.cli.*;
 import utils.StringUtils;

@@ -1,8 +1,8 @@
 package tools;
 
-import coprclient.HQueue;
-import coprclient.Message;
-import coprclient.MessageId;
+import client.HQueue;
+import client.Message;
+import client.MessageId;
 import common.HQueueParserException;
 import org.apache.commons.cli.*;
 import utils.StringUtils;

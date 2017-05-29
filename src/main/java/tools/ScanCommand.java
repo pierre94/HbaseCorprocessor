@@ -1,8 +1,8 @@
 package tools;
 
-import coprclient.HQueue;
-import coprclient.Message;
-import coprclient.PartitionScanner;
+import client.HQueue;
+import client.Message;
+import client.PartitionScanner;
 import common.HQueueParserException;
 import org.apache.commons.cli.*;
 import utils.StringUtils;
@@ -61,11 +61,10 @@ public class ScanCommand implements Command {
         try {
             hQueue = new HQueue(name);
             scanner = hQueue.getScanner(partitionId, timestamp);
-            if(scanner.hasNext()){
-                Message message = scanner.next();
-                System.out.println(message);
-                System.out.println("scan message success");
+            while(scanner.hasNext()){
+                System.out.println(scanner.next());
             }
+            System.out.println("scan message success");
         } finally {
             if(null != scanner){
                 scanner.close();

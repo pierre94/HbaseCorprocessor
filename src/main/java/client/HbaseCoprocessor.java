@@ -1,4 +1,4 @@
-package coprclient;
+package client;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,9 +22,9 @@ import java.util.List;
 /**
  * Created by zhuifeng on 2017/5/23.
  */
-public class PutCoprocessorTests extends BaseRegionObserver {
-    private static final Log LOG = LogFactory.getLog(PutCoprocessorTests.class);
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(PutCoprocessorTests.class);
+public class HbaseCoprocessor extends BaseRegionObserver {
+    private static final Log LOG = LogFactory.getLog(HbaseCoprocessor.class);
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(HbaseCoprocessor.class);
     private long timestamp = 0;
     private short sequenceId = 0;
 
@@ -33,14 +33,6 @@ public class PutCoprocessorTests extends BaseRegionObserver {
         LOG.info("open test coprocessor");
         log.info("open test coprocessor");
         System.out.println("open test coprocessor");
-    }
-
-    @Override
-    public void preGetOp(ObserverContext<RegionCoprocessorEnvironment> e, Get get, List<Cell> results) throws IOException {
-        KeyValue kv = new KeyValue(get.getRow(),Bytes.toBytes(HQueueConstants.COLUMN_FAMILY),
-                HQueueConstants.DEFAULT_TOPIC, Bytes.toBytes("abcdefg"));
-        results.add(kv);
-        e.bypass();
     }
 
     @Override
@@ -98,8 +90,6 @@ public class PutCoprocessorTests extends BaseRegionObserver {
                 System.arraycopy(Bytes.toBytes(sequenceId), 0, cell.getRowArray(),
                         cell.getRowOffset() + HQueueConstants.PARTITION_ID_LENGTH + HQueueConstants.TIMESTAMP_LENGTH,
                         HQueueConstants.SEQUENCE_ID_LENGTH);
-                System.arraycopy(Bytes.toBytes("11111"), 0, cell.getValueArray(), cell.getValueOffset(),
-                        Bytes.toBytes("11111").length);
             }
         }
     }

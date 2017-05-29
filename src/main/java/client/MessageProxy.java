@@ -1,11 +1,11 @@
-package coprclient;
+package client;
 
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.util.Bytes;
 
-import static coprclient.HQueueConstants.*;
+import static client.HQueueConstants.*;
 
 /**
  * Created by zhuifeng on 2017/5/25.

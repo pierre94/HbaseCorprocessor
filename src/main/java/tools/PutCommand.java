@@ -1,11 +1,19 @@
 package tools;
 
-import coprclient.HQueue;
-import coprclient.Message;
+import client.HQueue;
+import client.Message;
 import common.HQueueParserException;
 import org.apache.commons.cli.*;
 import org.apache.hadoop.hbase.util.Bytes;
 import utils.StringUtils;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class PutCommand implements Command {
     private String name;
@@ -56,7 +64,22 @@ public class PutCommand implements Command {
         HQueue hQueue = null;
         try {
             hQueue = new HQueue(name);
-            hQueue.put(new Message(partitionId, Bytes.toBytes(value)));
+            final HQueue hqueue = hQueue;
+            ExecutorService service = Executors.newFixedThreadPool(5);
+            service.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        List<Message> messages = new ArrayList<>();
+                        for(int i = 0; i< 2; ++i){
+                            messages.add(new Message(partitionId, Bytes.toBytes(value + i)));
+                        }
+                        hqueue.put(messages);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
             System.out.println("put message to hqueue success");
         } finally {
             if(null != hQueue){
